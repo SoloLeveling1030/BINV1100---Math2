@@ -53,18 +53,31 @@ public class Ens1 extends EnsembleAbstrait {
 
 	public int cardinal() {
 		//TODO
-		if (estVide()) throw new IllegalArgumentException();
 
-		return 0;
+		return cardinal;
 	}
 
 	public void complementer() {
 		//TODO
+		for (int i = 1; i <= MAX; i++) {
+			if (tabB[i]){
+				tabB[i] = false;
+				cardinal--;
+			}else {
+				tabB[i] = true;
+				cardinal++;
+			}
+
+		}
 		
 	}
 
 	public String toString() {
 		// TODO
+		if (estVide())
+			return "{}";
+
+
 		return null;
 	}
 	
