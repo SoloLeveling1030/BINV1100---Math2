@@ -4,11 +4,9 @@
 
  	 @author  M.Marchand
  	 @version Mars 2008
-*/ 
-   import java.util.*;
-import java.io.*;
+*/
 
-    public class Elt {
+public class Elt {
    
    	/** valeur numérique de MAXELT */
       private static final int MAXELTVALUE = 50;

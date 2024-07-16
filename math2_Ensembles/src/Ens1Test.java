@@ -1,16 +1,14 @@
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Random ;
+import java.util.Random;
 
 public class Ens1Test extends AbstractTest {
 	private Field fieldTab;
 	private Field fieldCard;
 
-
+	
 	public Ens1Test(){
 		super(Ens1.class);
 		Field[] champs = getCls().getDeclaredFields();
@@ -37,7 +35,7 @@ public class Ens1Test extends AbstractTest {
 		fieldTab.setAccessible(true);
 		fieldCard.setAccessible(true);
 	}
-
+	
 	@Override
 	public boolean testEstVide() throws IllegalArgumentException,
 			IllegalAccessException {
@@ -49,7 +47,7 @@ public class Ens1Test extends AbstractTest {
 		}
 		return testOK;
 	}
-
+	
 	@Override
 	public boolean testUnElement() throws IllegalArgumentException,MathException,
 			IllegalAccessException {
@@ -60,12 +58,12 @@ public class Ens1Test extends AbstractTest {
 			testOK = false;
 			System.out.println("L'ensemble est vide, votre m�thode aurait d� renvoyer une exception");
 		} catch (MathException e) {
-
+			
 		} catch (Exception e) {
 			System.out.println("Votre m�thode aurait du lancer une MathException mais a lanc� une "+e.getClass());
 			testOK = false ;
-		}
-
+		} 
+		
 		try {
 			for (int i=0 ; i<5 ; i++) {
 				ArrayList<Elt> listElt = new ArrayList<Elt>() ;
@@ -98,7 +96,7 @@ public class Ens1Test extends AbstractTest {
 		}
 		return testOK;
 	}
-
+	
 	@Override
 	public boolean testCardinal() throws IllegalArgumentException,
 			IllegalAccessException {
@@ -111,7 +109,7 @@ public class Ens1Test extends AbstractTest {
 		}
 		return testOK;
 	}
-
+	
 	@Override
 	public void visualiserToString() throws IllegalArgumentException,
 			IllegalAccessException {
@@ -129,7 +127,7 @@ public class Ens1Test extends AbstractTest {
 		tabB[0] = true;
 		return ens;
 	}
-
+	
 	@Override
 	protected HashSet<Elt> toSet() throws IllegalArgumentException,
 			IllegalAccessException {
@@ -140,7 +138,7 @@ public class Ens1Test extends AbstractTest {
 		}
 		return elem;
 	}
-
+	
 	@Override
 	protected int card() throws IllegalArgumentException, IllegalAccessException {
 		return fieldCard.getInt(getEnsemble());
@@ -153,7 +151,7 @@ public class Ens1Test extends AbstractTest {
 		}
 		return tab;
 	}
-
+	
 	@Override
 	protected EnsembleInterface creerEnsemble(Elt... elts) throws IllegalArgumentException, IllegalAccessException {
 		HashSet<Elt> ens = new HashSet<Elt>();
@@ -164,9 +162,9 @@ public class Ens1Test extends AbstractTest {
 		fieldCard.setInt(ensemble, ens.size());
 		return ensemble;
 	}
+	
 
-
-
+	
 	protected boolean verifInit() throws IllegalAccessException{
 		boolean[] tabTrouve = (boolean[]) fieldTab.get(getEnsemble());
 		if (tabTrouve == null){
@@ -176,8 +174,8 @@ public class Ens1Test extends AbstractTest {
 		else if (tabTrouve.length!= Elt.MAXELT.val()+1){
 			System.out.println("Le tableau de booleens n'a pas la bonne dimension !");
 			return false;
-		}
+		} 
 		return true;
 	}
-
+	
 }

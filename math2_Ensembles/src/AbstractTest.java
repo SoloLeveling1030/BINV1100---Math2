@@ -1,10 +1,6 @@
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.ArrayList ;
-import java.util.Random;
+import java.util.*;
 
 public abstract class AbstractTest {
 	protected static final Elt[] ELTS = { new Elt(5), new Elt(14), new Elt(9),
@@ -33,12 +29,12 @@ public abstract class AbstractTest {
 		HashSet<Elt> elemEns = toSet();
 		if (card != 0) {
 			testOK = false;
-			System.out.println("Le cardinal a été mal initialisé.");
+			System.out.println("Le cardinal a ï¿½tï¿½ mal initialisï¿½.");
 		} else if (!contenu.equals(elemEns)) {
 			testOK = false;
 			System.out
-					.println("On a créé l'ensemble vide. Il ne devrait pas contenir d'éléments.");
-			System.out.println("Votre ensemble contient les élements : "
+					.println("On a crï¿½ï¿½ l'ensemble vide. Il ne devrait pas contenir d'ï¿½lï¿½ments.");
+			System.out.println("Votre ensemble contient les ï¿½lements : "
 					+ enChaine(elemEns));
 		}
 		return testOK;
@@ -52,13 +48,13 @@ public abstract class AbstractTest {
 		if (!ensemble.estVide()) {
 			testOK = false;
 			System.out
-					.println("L'ensemble créé est vide. Votre méthode dit qu'il ne l'est pas.");
+					.println("L'ensemble crï¿½ï¿½ est vide. Votre mï¿½thode dit qu'il ne l'est pas.");
 		}
 		ensemble = creerEnsemble(ELTS);
 		if (ensemble.estVide()) {
 			testOK = false;
-			System.out.println("Ensemble créé : " + enChaine(ELTS));
-			System.out.println("Votre méthode dit qu'il est vide.");
+			System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(ELTS));
+			System.out.println("Votre mï¿½thode dit qu'il est vide.");
 		}
 		return testOK;
 	}
@@ -72,11 +68,11 @@ public abstract class AbstractTest {
 		try {
 			Elt elt = ensemble.unElement() ;
 			testOK = false;
-			System.out.println("Votre méthode renvoie un élément alors que l'ensemble est vide");
+			System.out.println("Votre mï¿½thode renvoie un ï¿½lï¿½ment alors que l'ensemble est vide");
 		} catch (MathException e) {
 			
 		} catch (Exception e) {
-			System.out.println("Votre méthode aurait du lancer une MathException mais a lancé une "+e.getClass());
+			System.out.println("Votre mï¿½thode aurait du lancer une MathException mais a lancï¿½ une "+e.getClass());
 			testOK = false ;
 		} 
 		
@@ -97,17 +93,17 @@ public abstract class AbstractTest {
 				Elt elt =  ensemble.unElement();
 				if (elt==null) {
 					testOK = false;
-					System.out.println("Votre méthode ne trouve pas d'élément alors que l'ensemble n'est pas vide");
-					System.out.println("Ensemble créé : " + enChaine(tabElt));
+					System.out.println("Votre mï¿½thode ne trouve pas d'ï¿½lï¿½ment alors que l'ensemble n'est pas vide");
+					System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(tabElt));
 				} else if (!(Arrays.asList(tabElt).contains(elt))) {
 					testOK = false ;
-					System.out.println("Votre méthode a renvoyé un élément qui n'est pas dans l'ensemble") ;
-					System.out.println("Ensemble créé : " + enChaine(tabElt));
-					System.out.println("Elt renvoyé : "+elt) ;
+					System.out.println("Votre mï¿½thode a renvoyï¿½ un ï¿½lï¿½ment qui n'est pas dans l'ensemble") ;
+					System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(tabElt));
+					System.out.println("Elt renvoyï¿½ : "+elt) ;
 				}
 			}
 		} catch(Exception e) {
-			System.out.println("Votre méthode a lancé une "+e.getClass()+" alors que l'ensemble n'est pas vide ") ;
+			System.out.println("Votre mï¿½thode a lancï¿½ une "+e.getClass()+" alors que l'ensemble n'est pas vide ") ;
 			testOK = false ;
 		}
 		return testOK;
@@ -120,23 +116,23 @@ public abstract class AbstractTest {
 		Elt e = new Elt(36);
 		if (ensemble.contient(e)) {
 			testOK = false;
-			System.out.println("L'ensemble créé est vide.");
-			System.out.println("Votre méthode contient dit que l'élément " + e
+			System.out.println("L'ensemble crï¿½ï¿½ est vide.");
+			System.out.println("Votre mï¿½thode contient dit que l'ï¿½lï¿½ment " + e
 					+ " est dans l'ensemble.");
 		}
 		ensemble = creerEnsemble(ELTS);
 		if (ensemble.contient(e)) {
 			testOK = false;
-			System.out.println("Ensemble créé : " + enChaine(ELTS));
-			System.out.println("Votre méthode contient dit que l'élément " + e
+			System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(ELTS));
+			System.out.println("Votre mï¿½thode contient dit que l'ï¿½lï¿½ment " + e
 					+ " est dans l'ensemble.");
 		}
 
 		for (Elt elt : ELTS) {
 			if (!ensemble.contient(new Elt(elt))) {
 				testOK = false;
-				System.out.println("Ensemble créé : " + enChaine(ELTS));
-				System.out.println("Votre méthode contient dit que l'élément "
+				System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(ELTS));
+				System.out.println("Votre mï¿½thode contient dit que l'ï¿½lï¿½ment "
 						+ elt + " n'est pas dans l'ensemble.");
 				break;
 			}
@@ -145,7 +141,7 @@ public abstract class AbstractTest {
 			ensemble.contient(null);
 			testOK = false;
 			System.out
-					.println("On a appelé la méthode contient avec null comme paramètre --> Il fallait lancer une IllegalArgumentException.");
+					.println("On a appelï¿½ la mï¿½thode contient avec null comme paramï¿½tre --> Il fallait lancer une IllegalArgumentException.");
 		} catch (IllegalArgumentException iae) {
 
 		}
@@ -161,7 +157,7 @@ public abstract class AbstractTest {
 			ensemble.ajouter(elt);
 			testOK = false;
 			System.out
-					.println("On a appelé la méthode ajouter avec null comme paramètre --> Il fallait lancer une IllegalArgumentException.");
+					.println("On a appelï¿½ la mï¿½thode ajouter avec null comme paramï¿½tre --> Il fallait lancer une IllegalArgumentException.");
 		} catch (IllegalArgumentException iae) {
 
 		}
@@ -174,24 +170,24 @@ public abstract class AbstractTest {
 		int nouveauCard = card();
 		if (nouveauCard != contenu.size()) {
 			testOK = false;
-			System.out.println("On a ajouté l'élément " + elt
-					+ " à l'ensemble " + enChaine(contenuAvant) + ".");
-			System.out.println("Après l'ajout, le cardinal doit valoir "
+			System.out.println("On a ajoutï¿½ l'ï¿½lï¿½ment " + elt
+					+ " ï¿½ l'ensemble " + enChaine(contenuAvant) + ".");
+			System.out.println("Aprï¿½s l'ajout, le cardinal doit valoir "
 					+ contenu.size() + ".");
-			System.out.println("Le cardinal de votre ensemble est à "
+			System.out.println("Le cardinal de votre ensemble est ï¿½ "
 					+ nouveauCard + ".");
 		}
 		if (testOK) {
 			HashSet<Elt> elemEns = toSet();
 			if (!contenu.equals(elemEns)) {
 				testOK = false;
-				System.out.println("On a ajouté l'élément " + elt
-						+ " à l'ensemble " + enChaine(ELTS) + ".");
+				System.out.println("On a ajoutï¿½ l'ï¿½lï¿½ment " + elt
+						+ " ï¿½ l'ensemble " + enChaine(ELTS) + ".");
 				System.out
-						.println("Elements qui devraient être dans l'ensemble : "
+						.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 								+ enChaine(contenu));
 				System.out
-						.println("Les éléments trouvés dans votre ensemble sont : "
+						.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 								+ enChaine(elemEns));
 			}
 		}
@@ -202,24 +198,24 @@ public abstract class AbstractTest {
 		nouveauCard = card();
 		if (nouveauCard != contenu.size()) {
 			testOK = false;
-			System.out.println("On a ajouté l'élément " + elt
-					+ " à l'ensemble " + enChaine(contenuAvant) + ".");
-			System.out.println("Après l'ajout, le cardinal doit valoir "
+			System.out.println("On a ajoutï¿½ l'ï¿½lï¿½ment " + elt
+					+ " ï¿½ l'ensemble " + enChaine(contenuAvant) + ".");
+			System.out.println("Aprï¿½s l'ajout, le cardinal doit valoir "
 					+ contenu.size() + ".");
-			System.out.println("Le cardinal de votre ensemble est à "
+			System.out.println("Le cardinal de votre ensemble est ï¿½ "
 					+ nouveauCard + ".");
 		}
 		if (testOK) {
 			HashSet<Elt> elemEns = toSet();
 			if (!contenu.equals(elemEns)) {
 				testOK = false;
-				System.out.println("On a ajouté l'élément " + elt
-						+ " à l'ensemble " + enChaine(ELTS) + ".");
+				System.out.println("On a ajoutï¿½ l'ï¿½lï¿½ment " + elt
+						+ " ï¿½ l'ensemble " + enChaine(ELTS) + ".");
 				System.out
-						.println("Elements qui devraient être dans l'ensemble : "
+						.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 								+ enChaine(contenu));
 				System.out
-						.println("Les éléments trouvés dans votre ensemble sont : "
+						.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 								+ enChaine(elemEns));
 			}
 		}
@@ -235,7 +231,7 @@ public abstract class AbstractTest {
 			ensemble.enlever(elt);
 			testOK = false;
 			System.out
-					.println("On a appelé la méthode enlever avec null comme paramètre --> Il fallait lancer une IllegalArgumentException.");
+					.println("On a appelï¿½ la mï¿½thode enlever avec null comme paramï¿½tre --> Il fallait lancer une IllegalArgumentException.");
 		} catch (IllegalArgumentException iae) {
 
 		}
@@ -249,24 +245,24 @@ public abstract class AbstractTest {
 		int nouveauCard = card();
 		if (nouveauCard != contenu.size()) {
 			testOK = false;
-			System.out.println("On a enlevé l'élément " + elt
+			System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 					+ " de l'ensemble " + enChaine(contenuAvant));
-			System.out.println("Après la suppression, le cardinal doit valoir "
+			System.out.println("Aprï¿½s la suppression, le cardinal doit valoir "
 					+ contenu.size() + ".");
-			System.out.println("Le cardinal de votre ensemble est à "
+			System.out.println("Le cardinal de votre ensemble est ï¿½ "
 					+ nouveauCard + ".");
 		}
 		if (testOK) {
 			HashSet<Elt> elemEns = toSet();
 			if (!contenu.equals(contenuAvant)) {
 				testOK = false;
-				System.out.println("On a enlevé l'élément " + elt
+				System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 						+ " de l'ensemble " + enChaine(ELTS) + ".");
 				System.out
-						.println("Elements qui devraient être dans l'ensemble : "
+						.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 								+ enChaine());
 				System.out
-						.println("Les éléments trouvés dans votre ensemble sont : "
+						.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 								+ enChaine(elemEns));
 			}
 		}
@@ -278,24 +274,24 @@ public abstract class AbstractTest {
 		nouveauCard = card();
 		if (nouveauCard != contenu.size()) {
 			testOK = false;
-			System.out.println("On a enlevé l'élément " + elt
+			System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 					+ " de l'ensemble " + enChaine(contenuAvant));
-			System.out.println("Après la suppression, le cardinal doit valoir "
+			System.out.println("Aprï¿½s la suppression, le cardinal doit valoir "
 					+ contenu.size() + ".");
-			System.out.println("Le cardinal de votre ensemble est à "
+			System.out.println("Le cardinal de votre ensemble est ï¿½ "
 					+ nouveauCard + ".");
 		}
 		if (testOK) {
 			HashSet<Elt> elemEns = toSet();
 			if (!contenu.equals(elemEns)) {
 				testOK = false;
-				System.out.println("On a enlevé l'élément " + elt
+				System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 						+ " de l'ensemble " + enChaine(contenuAvant) + ".");
 				System.out
-						.println("Elements qui devraient être dans l'ensemble : "
+						.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 								+ enChaine(contenu));
 				System.out
-						.println("Les éléments trouvés dans votre ensemble sont : "
+						.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 								+ enChaine(elemEns));
 			}
 		}
@@ -307,25 +303,25 @@ public abstract class AbstractTest {
 			nouveauCard = card();
 			if (nouveauCard != contenu.size()) {
 				testOK = false;
-				System.out.println("On a enlevé l'élément " + elt
+				System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 						+ " de l'ensemble " + enChaine(contenuAvant) + ".");
 				System.out
-						.println("Après la suppression, le cardinal doit valoir "
+						.println("Aprï¿½s la suppression, le cardinal doit valoir "
 								+ contenu.size() + ".");
-				System.out.println("Le cardinal de votre ensemble est à "
+				System.out.println("Le cardinal de votre ensemble est ï¿½ "
 						+ nouveauCard + ".");
 			}
 			if (testOK) {
 				HashSet<Elt> elemEns = toSet();
 				if (!contenu.equals(elemEns)) {
 					testOK = false;
-					System.out.println("On a enlevé l'élément " + elt
+					System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 							+ " de l'ensemble " + enChaine(contenuAvant) + ".");
 					System.out
-							.println("Elements qui devraient être dans l'ensemble : "
+							.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 									+ enChaine(contenu));
 					System.out
-							.println("Les éléments trouvés dans votre ensemble sont : "
+							.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 									+ enChaine(elemEns));
 				}
 			}
@@ -338,11 +334,11 @@ public abstract class AbstractTest {
 				nouveauCard = card();
 				if (nouveauCard != contenu.size()) {
 					testOK = false;
-					System.out.println("On a enlevé l'élément " + e
+					System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + e
 							+ " de l'ensemble " + enChaine(contenuAvant));
-					System.out.println("Après la suppression, le cardinal doit valoir "
+					System.out.println("Aprï¿½s la suppression, le cardinal doit valoir "
 							+ contenu.size() + ".");
-					System.out.println("Le cardinal de votre ensemble est à "
+					System.out.println("Le cardinal de votre ensemble est ï¿½ "
 							+ nouveauCard + ".");
 					break;
 				}
@@ -350,13 +346,13 @@ public abstract class AbstractTest {
 					HashSet<Elt> elemEns = toSet();
 					if (!contenu.equals(elemEns)) {
 						testOK = false;
-						System.out.println("On a enlevé l'élément " + e
+						System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + e
 								+ " de l'ensemble " + enChaine(contenuAvant) + ".");
 						System.out
-								.println("Elements qui devraient être dans l'ensemble : "
+								.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 										+ enChaine(contenu));
 						System.out
-								.println("Les éléments trouvés dans votre ensemble sont : "
+								.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 										+ enChaine(elemEns));
 						break;
 					}
@@ -372,24 +368,24 @@ public abstract class AbstractTest {
 			nouveauCard = card();
 			if (nouveauCard != contenu.size()) {
 				testOK = false;
-				System.out.println("On a enlevé l'élément " + elt
+				System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 						+ " de l'ensemble " + enChaine(contenuAvant));
-				System.out.println("Après la suppression, le cardinal doit valoir "
+				System.out.println("Aprï¿½s la suppression, le cardinal doit valoir "
 						+ contenu.size() + ".");
-				System.out.println("Le cardinal de votre ensemble est à "
+				System.out.println("Le cardinal de votre ensemble est ï¿½ "
 						+ nouveauCard + ".");
 			}
 			if (testOK) {
 				HashSet<Elt> elemEns = toSet();
 				if (!contenu.equals(elemEns)) {
 					testOK = false;
-					System.out.println("On a enlevé l'élément " + elt
+					System.out.println("On a enlevï¿½ l'ï¿½lï¿½ment " + elt
 							+ " de l'ensemble " + enChaine(contenuAvant) + ".");
 					System.out
-							.println("Elements qui devraient être dans l'ensemble : "
+							.println("Elements qui devraient ï¿½tre dans l'ensemble : "
 									+ enChaine(contenu));
 					System.out
-							.println("Les éléments trouvés dans votre ensemble sont : "
+							.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 									+ enChaine(elemEns));
 				}
 			}
@@ -403,16 +399,16 @@ public abstract class AbstractTest {
 		ensemble = creerEnsemble(new Elt[0]);
 		if (ensemble.cardinal() != 0) {
 			testOK = false;
-			System.out.println("L'ensemble créé est vide.");
-			System.out.println("Votre méthode cardinal dit qu'il contient "
-					+ ensemble.cardinal() + " élément(s).");
+			System.out.println("L'ensemble crï¿½ï¿½ est vide.");
+			System.out.println("Votre mï¿½thode cardinal dit qu'il contient "
+					+ ensemble.cardinal() + " ï¿½lï¿½ment(s).");
 		}
 		ensemble = creerEnsemble(ELTS);
 		if (ensemble.cardinal() != ELTS.length) {
 			testOK = false;
-			System.out.println("Ensemble créé : " + enChaine(ELTS));
-			System.out.println("Votre méthode cardinal dit qu'il contient "
-					+ ensemble.cardinal() + " élément(s).");
+			System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(ELTS));
+			System.out.println("Votre mï¿½thode cardinal dit qu'il contient "
+					+ ensemble.cardinal() + " ï¿½lï¿½ment(s).");
 		}
 		return testOK;
 	}
@@ -429,11 +425,11 @@ public abstract class AbstractTest {
 		if (nouveauCard != complem.size()) {
 			testOK = false;
 			System.out
-					.println("On a pris le complémentaire de l'ensemble vide.");
+					.println("On a pris le complï¿½mentaire de l'ensemble vide.");
 			System.out
-					.println("Après avoir fait le complémentaire, le cardinal devrait valoir "
+					.println("Aprï¿½s avoir fait le complï¿½mentaire, le cardinal devrait valoir "
 							+ complem.size() + ".");
-			System.out.println("Le cardinal de votre ensemble est à "
+			System.out.println("Le cardinal de votre ensemble est ï¿½ "
 					+ nouveauCard + ".");
 		}
 		if (testOK) {
@@ -441,12 +437,12 @@ public abstract class AbstractTest {
 			if (!complem.equals(elemEns)) {
 				testOK = false;
 				System.out
-						.println("On a pris le complémentaire de l'ensemble vide.");
+						.println("On a pris le complï¿½mentaire de l'ensemble vide.");
 				System.out
-						.println("Elements qui devraient être dans l'ensemble : ");
+						.println("Elements qui devraient ï¿½tre dans l'ensemble : ");
 				System.out.println(enChaine(complem));
 				System.out
-						.println("Les éléments trouvés dans votre ensemble sont : "
+						.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 								+ enChaine(elemEns));
 			}
 		}
@@ -457,25 +453,25 @@ public abstract class AbstractTest {
 		nouveauCard = card();
 		if (nouveauCard != complem.size()) {
 			testOK = false;
-			System.out.println("On a pris le complémentaire de l'ensemble "
+			System.out.println("On a pris le complï¿½mentaire de l'ensemble "
 					+ enChaine(ELTS) + ".");
 			System.out
-					.println("Après avoir fait le complémentaire, le cardinal devrait valoir "
+					.println("Aprï¿½s avoir fait le complï¿½mentaire, le cardinal devrait valoir "
 							+ complem.size() + ".");
-			System.out.println("Le cardinal de votre ensemble est à "
+			System.out.println("Le cardinal de votre ensemble est ï¿½ "
 					+ nouveauCard + ".");
 		}
 		if (testOK) {
 			HashSet<Elt> elemEns = toSet();
 			if (!complem.equals(elemEns)) {
 				testOK = false;
-				System.out.println("On a pris le complémentaire de l'ensemble "
+				System.out.println("On a pris le complï¿½mentaire de l'ensemble "
 						+ enChaine(ELTS) + ".");
 				System.out
-						.println("Elements qui devraient être dans l'ensemble : ");
+						.println("Elements qui devraient ï¿½tre dans l'ensemble : ");
 				System.out.println(enChaine(complem));
 				System.out
-						.println("Les éléments trouvés dans votre ensemble sont : "
+						.println("Les ï¿½lï¿½ments trouvï¿½s dans votre ensemble sont : "
 								+ enChaine(elemEns));
 			}
 		}
@@ -485,17 +481,17 @@ public abstract class AbstractTest {
 	public void visualiserToString() throws IllegalArgumentException,
 			IllegalAccessException {
 		ensemble = creerEnsemble(new Elt[0]);
-		System.out.println("Ensemble à afficher : ");
+		System.out.println("Ensemble ï¿½ afficher : ");
 		System.out.println("{}");
 		System.out
-				.println("Chaîne de caractères renvoyée par votre toString : ");
+				.println("Chaï¿½ne de caractï¿½res renvoyï¿½e par votre toString : ");
 		System.out.println(ensemble);
 		ensemble = creerEnsemble(ELTS);
 		System.out
-				.println("Ensemble à afficher (l'ordre dans lequel se trouvent les éléments n'a pas d'importance): ");
+				.println("Ensemble ï¿½ afficher (l'ordre dans lequel se trouvent les ï¿½lï¿½ments n'a pas d'importance): ");
 		System.out.println(enChaine(ELTS));
 		System.out
-				.println("Chaîne de caractères renvoyée par votre toString : ");
+				.println("Chaï¿½ne de caractï¿½res renvoyï¿½e par votre toString : ");
 		System.out.println(ensemble);
 	}
 
@@ -509,7 +505,7 @@ public abstract class AbstractTest {
 				constr.newInstance((EnsembleInterface) null);
 				testOK = false;
 				System.out
-						.println("Appel du constructeur avec un paramètre null --> Il fallait lancer une IllegalArgumentException !");
+						.println("Appel du constructeur avec un paramï¿½tre null --> Il fallait lancer une IllegalArgumentException !");
 			} catch (InvocationTargetException exc) {
 				if (!(exc.getCause() instanceof IllegalArgumentException)) {
 					throw exc;
@@ -528,12 +524,12 @@ public abstract class AbstractTest {
 				if (card() != ELTS.length) {
 					testOK = false;
 					System.out
-							.println("Le cardinal n'a pas été bien initialisé !");
+							.println("Le cardinal n'a pas ï¿½tï¿½ bien initialisï¿½ !");
 				}
 				HashSet<Elt> trouve = toSet();
 				if (!trouve.equals(contenu)) {
 					testOK = false;
-					System.out.println("Elements de l'ensemble recopié : "
+					System.out.println("Elements de l'ensemble recopiï¿½ : "
 							+ enChaine(contenu));
 					System.out.println("Elements dans votre copie : "
 							+ enChaine(trouve));
@@ -545,7 +541,7 @@ public abstract class AbstractTest {
 
 		} catch (NoSuchMethodException e) {
 			System.out
-					.println("Vous n'avez pas écrit le constructeur ayant comme paramètre un objet de type EnsembleInterface ou celui-ci n'est pas public !");
+					.println("Vous n'avez pas ï¿½crit le constructeur ayant comme paramï¿½tre un objet de type EnsembleInterface ou celui-ci n'est pas public !");
 			return false;
 		} 
 
@@ -561,7 +557,7 @@ public abstract class AbstractTest {
 				constr.newInstance((Elt) null);
 				testOK = false;
 				System.out
-						.println("Appel du constructeur avec un paramètre null --> Il fallait lancer une IllegalArgumentException !");
+						.println("Appel du constructeur avec un paramï¿½tre null --> Il fallait lancer une IllegalArgumentException !");
 			} catch (InvocationTargetException exc) {
 				if (!(exc.getCause() instanceof IllegalArgumentException)) {
 					throw exc;
@@ -575,12 +571,12 @@ public abstract class AbstractTest {
 				return false;
 			if (ensemble.cardinal() != 1) {
 				testOK = false;
-				System.out.println("Le cardinal n'a pas été bien initialisé !");
+				System.out.println("Le cardinal n'a pas ï¿½tï¿½ bien initialisï¿½ !");
 			}
 			HashSet<Elt> trouve = toSet();
 			if (!trouve.equals(contenu)) {
 				testOK = false;
-				System.out.println("Element de l'ensemble créé : "
+				System.out.println("Element de l'ensemble crï¿½ï¿½ : "
 						+ enChaine(contenu));
 				System.out.println("Elements dans votre copie : "
 						+ enChaine(trouve));
@@ -592,7 +588,7 @@ public abstract class AbstractTest {
 
 		} catch (NoSuchMethodException exc) {
 			System.out
-					.println("Vous n'avez pas écrit le constructeur ayant comme paramètre un objet de type Elt ou celui-ci n'est pas public !");
+					.println("Vous n'avez pas ï¿½crit le constructeur ayant comme paramï¿½tre un objet de type Elt ou celui-ci n'est pas public !");
 			return false;
 		} 
 	}

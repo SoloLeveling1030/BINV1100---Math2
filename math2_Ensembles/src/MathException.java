@@ -5,10 +5,7 @@
 	 @version Mars 2002
 */
 
-   import java.util.*;
-   import java.io.*;
-
-    public class MathException extends RuntimeException {
+public class MathException extends RuntimeException {
  
        public MathException() {
          super();

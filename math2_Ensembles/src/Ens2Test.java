@@ -1,6 +1,4 @@
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,7 +13,7 @@ public class Ens2Test extends AbstractTest {
 		super(Ens2.class);
 		Field[] champs = getCls().getDeclaredFields();
 		if (champs.length > 2) {
-			System.out.println("Il est inutile de déclarer des champs supplémentaire dans Ens2");
+			System.out.println("Il est inutile de dï¿½clarer des champs supplï¿½mentaire dans Ens2");
 			System.exit(0);
 		}
 		for (Field f : champs){
@@ -26,12 +24,12 @@ public class Ens2Test extends AbstractTest {
 				fieldCard = f;
 			}
 			else {
-				System.out.println("Que représente le champ " + f.getName() + " de type " + f.getType().getName() + " ?");
+				System.out.println("Que reprï¿½sente le champ " + f.getName() + " de type " + f.getType().getName() + " ?");
 				System.exit(0);
 			}
 		}
 		if (fieldTab == null||fieldCard==null) {
-			System.out.println("Vous avez supprimé un attribut de la classe Ens2");
+			System.out.println("Vous avez supprimï¿½ un attribut de la classe Ens2");
 			System.exit(0);
 		}
 		fieldTab.setAccessible(true);
@@ -46,7 +44,7 @@ public class Ens2Test extends AbstractTest {
 		fieldCard.set(ens, 0);
 		if (!ens.estVide()){
 			testOK = false;
-			System.out.println("On a créé un ensemble vide et votre méthode dit qu'il ne l'est pas !");
+			System.out.println("On a crï¿½ï¿½ un ensemble vide et votre mï¿½thode dit qu'il ne l'est pas !");
 		}
 		return testOK;
 	}
@@ -59,11 +57,11 @@ public class Ens2Test extends AbstractTest {
 		try {
 			Elt elt = ens.unElement() ;
 			testOK = false;
-			System.out.println("Votre méthode renvoie un élément alors que l'ensemble est vide");
+			System.out.println("Votre mï¿½thode renvoie un ï¿½lï¿½ment alors que l'ensemble est vide");
 		} catch (MathException e) {
 			
 		} catch (Exception e) {
-			System.out.println("Votre méthode aurait du lancer une MathException mais a lancé une "+e.getClass());
+			System.out.println("Votre mï¿½thode aurait du lancer une MathException mais a lancï¿½ une "+e.getClass());
 			testOK = false ;
 		} 
 		
@@ -84,17 +82,17 @@ public class Ens2Test extends AbstractTest {
 				Elt elt =  ens.unElement();
 				if (elt==null) {
 					testOK = false;
-					System.out.println("Votre méthode ne trouve pas d'élément alors que l'ensemble n'est pas vide");
-					System.out.println("Ensemble créé : " + enChaine(tabElt));
+					System.out.println("Votre mï¿½thode ne trouve pas d'ï¿½lï¿½ment alors que l'ensemble n'est pas vide");
+					System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(tabElt));
 				} else if (!(Arrays.asList(tabElt).contains(elt))) {
 					testOK = false ;
-					System.out.println("Votre méthode a renvoyé un élément qui n'est pas dans l'ensemble") ;
-					System.out.println("Ensemble créé : " + enChaine(tabElt));
-					System.out.println("Elt renvoyé : "+elt) ;
+					System.out.println("Votre mï¿½thode a renvoyï¿½ un ï¿½lï¿½ment qui n'est pas dans l'ensemble") ;
+					System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(tabElt));
+					System.out.println("Elt renvoyï¿½ : "+elt) ;
 				}
 			}
 		} catch(Exception e) {
-			System.out.println("Votre méthode a lancé une "+e.getClass()+" alors que l'ensemble n'est pas vide ") ;
+			System.out.println("Votre mï¿½thode a lancï¿½ une "+e.getClass()+" alors que l'ensemble n'est pas vide ") ;
 			testOK = false ;
 		}
 		return testOK;
@@ -111,8 +109,8 @@ public class Ens2Test extends AbstractTest {
 		System.out.println("element = "+tab[ELTS.length-1]+" ens = "+ens);
 		if (ens.contient(tab[ELTS.length-1])){
 			testOK = false;
-			System.out.println("Ensemble créé : " + enChaine(Arrays.copyOf(tab, ELTS.length-1)));
-			System.out.println("Votre méthode contient dit que l'élément " + tab[ELTS.length-1] + " est dans l'ensemble");
+			System.out.println("Ensemble crï¿½ï¿½ : " + enChaine(Arrays.copyOf(tab, ELTS.length-1)));
+			System.out.println("Votre mï¿½thode contient dit que l'ï¿½lï¿½ment " + tab[ELTS.length-1] + " est dans l'ensemble");
 		}
 		return testOK;
 	}
@@ -153,11 +151,11 @@ public class Ens2Test extends AbstractTest {
 	protected boolean verifInit() throws  IllegalAccessException{
 		Elt[] tabTrouve = (Elt[]) fieldTab.get(getEnsemble());
 		if (tabTrouve == null){
-			System.out.println("Le tableau d'éléments n'a pas été initialisé !");
+			System.out.println("Le tableau d'ï¿½lï¿½ments n'a pas ï¿½tï¿½ initialisï¿½ !");
 			return false;
 		}
 		else if (tabTrouve.length!= Elt.MAXELT.val()){
-			System.out.println("Le tableau d'éléments n'a pas la bonne dimension !");
+			System.out.println("Le tableau d'ï¿½lï¿½ments n'a pas la bonne dimension !");
 			return false;
 		} 
 		return true;
