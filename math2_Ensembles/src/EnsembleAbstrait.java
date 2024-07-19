@@ -20,11 +20,15 @@ public abstract class EnsembleAbstrait implements EnsembleInterface {
 			return true;
 		if (!(o instanceof EnsembleAbstrait))
 			return false ;
-		EnsembleAbstrait a = (EnsembleAbstrait) o;
-		if (cardinal() != a.cardinal())
-			return false;
+		EnsembleAbstrait ens = (EnsembleAbstrait) o;
+		for (int i = 1; i <= MAX; i++) {
+			Elt ei = new Elt(i);
+			if (this.contient(ei) != ens.contient(ei))
+				return false;
+		}
 		return true;
 	}
+
 
 	@Override
 	public final int hashCode() {
