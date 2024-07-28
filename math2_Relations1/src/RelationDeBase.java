@@ -73,7 +73,7 @@ public  class RelationDeBase extends RelationAbstraite implements Cloneable {
 		this.arr.ajouter(e);
 	}
 
-	public void supprimerDepart(Elt e) {
+	public void  supprimerDepart(Elt e) {
 		if (!this.dep.contient(e))
 			return;
 		numVersion++;

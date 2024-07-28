@@ -8,18 +8,33 @@ public class Ordre extends RelationAbstraite {
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public Ordre(EnsembleAbstrait e) {
 		//TODO
+		 this.couples = Relation.identite(e);
 	}
 
 	//construit le plus petit ordre contenant r
 	//lance une IllegalArgumentException si cette construction n'est pas possible
 	public Ordre(Relation r) {
 		//TODO
+		if (r == null || !r.depart().equals(r.arrivee()) || !r.antisymetrique())throw new IllegalArgumentException();
+		Relation relclone = r.clone();
+
+		if (!relclone.reflexive()){
+			relclone.cloReflex();
+		}
+		if (!relclone.transitive()){
+			relclone.cloTrans();
+		}
+		if (!relclone.antisymetrique())
+			throw new IllegalArgumentException();
+		this.couples=relclone;
 	}
 	
-	//constructeur pas recopie
+	//constructeur par recopie
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public Ordre(Ordre or) {
 		//TODO
+		if (or == null) throw new IllegalArgumentException();
+		this.couples = or.couples.clone();
 	}
 
 	//ajoute x à l'ensemble sous-jacent de la relation d'ordre
@@ -27,6 +42,11 @@ public class Ordre extends RelationAbstraite {
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public void ajouterAuSousJacent(Elt x) {
 		//TODO
+		if (x == null)throw new IllegalArgumentException();
+
+		couples.ajouterArrivee(x);
+		couples.ajouterDepart(x);
+		couples.ajouter(x,x);
 	}
 
 	//enlève x de l'ensemble sous-jacent de la relation d'ordre
@@ -35,6 +55,16 @@ public class Ordre extends RelationAbstraite {
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public void enleverDuSousJacent(Elt x) {
 		//TODO
+		if (x == null)throw new IllegalArgumentException();
+		if (couples.depart().contient(x))
+			couples.enlever(x,x);
+		Relation r = couples.clone();
+		for (Couple c:r) {
+			if (c.getX().equals(x) || c.getY().equals(x))
+				couples.enlever(c);
+		}
+		couples.supprimerDepart(x);
+		couples.supprimerArrivee(x);
 	}
 	
 	@Override
@@ -59,6 +89,11 @@ public class Ordre extends RelationAbstraite {
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public void ajouter(Couple c) {
 		//TODO
+		if (c == null || !couples.depart().contient(c.getX()) || !couples.depart().contient(c.getX()) || couples.contient(c.reciproque()))throw new IllegalArgumentException();
+		couples.ajouter(c);
+		couples.cloReflex();
+		couples.cloTrans();
+		if (!couples.antisymetrique())throw new IllegalArgumentException();
 	}
 
 
@@ -133,71 +168,141 @@ public class Ordre extends RelationAbstraite {
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public boolean comparables(Elt x, Elt y) {
 		//TODO
-		return false;
+		if (x == null || y == null || !couples.depart().contient(x) || !couples.arrivee().contient(y)) throw new IllegalArgumentException();
+		return couples.contient(x,y) || couples.contient(y,x);
 	}
 
 	// Renvoie l'ensemble des éléments minimaux de b
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public EnsembleAbstrait minimaux(EnsembleAbstrait b) {
 		//TODO
-		return null;
+		if ( b == null || !b.inclusDans(couples.depart()))throw new IllegalArgumentException();
+		EnsembleAbstrait ens = b.clone();
+		for (Couple couple :couples) {
+			if (ens.contient(couple.getX()) && ens.contient(couple.getY()))
+				if (!couple.getX().equals(couple.getY()))
+					ens.enlever(couple.getY());
+		}
+		return ens;
 	}
 	
 	// Renvoie l'ensemble des éléments maximaux de b
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public EnsembleAbstrait maximaux(EnsembleAbstrait b) {
 		//TODO
-		return null;
+		if ( b == null || !b.inclusDans(couples.depart()))throw new IllegalArgumentException();
+		EnsembleAbstrait ens = b.clone();
+		for (Couple couple :couples) {
+			if (ens.contient(couple.getX()) && ens.contient(couple.getY()))
+				if (!couple.getX().equals(couple.getY()))
+					ens.enlever(couple.getX());
+		}
+		return ens;
 	}
+
+
 
 	// Renvoie le minimum de b s'il existe; renvoie null sinon
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public Elt minimum(EnsembleAbstrait b) {
 		//TODO
-		return null;
+		if ( b == null || !b.inclusDans(couples.depart()))throw new IllegalArgumentException();
+		EnsembleAbstrait ens = minimaux(b);
+		if (ens.cardinal() >1)
+			return null;
+		return ens.unElement();
 	}
 	
 	// Renvoie le maximum de b s'il existe; renvoie null sinon
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public Elt maximum(EnsembleAbstrait b) {
 		//TODO
-		return null;
+		if ( b == null || !b.inclusDans(couples.depart()))throw new IllegalArgumentException();
+		EnsembleAbstrait ens = maximaux(b);
+		if (ens.cardinal() >1)
+			return null;
+		return ens.unElement();
 	}
 
 	// Renvoie l'ensemble des minorants de b
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public EnsembleAbstrait minor(EnsembleAbstrait b) {
-		//TODO
-		return null;
+		if(b==null || !b.inclusDans(this.couples.depart()))
+			throw new IllegalArgumentException();
+
+		EnsembleAbstrait ens = new Ensemble();
+		for (Elt e : this.couples.depart()) {
+			boolean minorant = true;
+			for (Elt f: b) {
+				if(!this.couples.contient(new Couple(e,f))) {
+					minorant = false;
+					break;
+				}
+			}
+			if(minorant)
+				ens.ajouter(e);
+		}
+		return ens;
 	}
-	
+
 	// Renvoie l'ensemble des majorants de b
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public EnsembleAbstrait major(EnsembleAbstrait b) {
-		//TODO
-		return null;
+		if(b==null || !b.inclusDans(this.couples.depart()))
+			throw new IllegalArgumentException();
+
+		EnsembleAbstrait ens = new Ensemble();
+		for (Elt e : this.couples.depart()) {
+			boolean majorant = true;
+			for (Elt f: b) {
+				if(!this.couples.contient(new Couple(f,e))) {
+					majorant = false;
+					break;
+				}
+			}
+			if(majorant)
+				ens.ajouter(e);
+		}
+		return ens;
 	}
 
 	// Renvoie l'infimum de b s'il existe; renvoie null sinon
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public Elt infimum(EnsembleAbstrait b) {
-		//TODO
-		return null;
+		if(b==null || !b.inclusDans(this.couples.depart()))
+			throw new IllegalArgumentException();
+
+		EnsembleAbstrait ens = minor(b);
+
+		return maximum(ens);
 	}
-	
+
 	// Renvoie le supremum de b s'il existe; renvoie null sinon
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public Elt supremum(EnsembleAbstrait b) {
-		//TODO
-		return null;
+		if(b==null || !b.inclusDans(this.couples.depart()))
+			throw new IllegalArgumentException();
+
+		EnsembleAbstrait ens = major(b);
+
+		return minimum(ens);
 	}
 
 	//Renvoie true ssi this est un treillis
 	//lance une IllegalArgumentException en cas de paramètre invalide
 	public boolean treillis(){
-		//TODO
-		return false;
+		for (Elt e: couples.depart()) {
+			for (Elt f : couples.depart()) {
+				EnsembleAbstrait ens = new Ensemble();
+				ens.ajouter(e);
+				ens.ajouter(f);
+				if(supremum(ens)==null || infimum(ens)==null)
+					return false;
+			}
+		}
+		return true;
 	}
+
 
 	public String toString() {
 		return couples.toString();
