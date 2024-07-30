@@ -127,6 +127,7 @@ public class Equivalence extends RelationAbstraite {
 		if (classeX.cardinal() != 2 || !classeX.contient(y)) {
 			throw new IllegalArgumentException("La classe commune n'est pas {x, y}.");
 		}
+
 		// Scinder la classe en deux
 		tabRep[y.val()] = y;
 		numVersion++;
